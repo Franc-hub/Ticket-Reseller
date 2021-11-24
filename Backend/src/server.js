@@ -7,7 +7,6 @@ require("dotenv").config();
 const config = require("./config.js");
 const path = require("path");
 global.appRoot = path.resolve(__dirname);
-
 const app = express();
 const jwtProtection = jwt({
     secret: process.env.TOKEN_SECRET,
