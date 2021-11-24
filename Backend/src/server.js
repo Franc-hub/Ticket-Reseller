@@ -24,18 +24,18 @@ app.use(express.static("."));
 
 app.disable("x-powered-by");
 
-//  test 
+const check = app.get( '/', function (req, res) {
+    return res.status(200).send("If you see this everything should working fine.");
+})
 
-app.get('/', function (req, res) {
-    res.status(200).send('Hello World!');
-  }
   
 const start = async () => {
     try {
         app.listen(config.port, () => {
             console.log(`REST API on http://localhost:${config.port}`);
         });
-
+        if(check) console.log(':)');
+        else console.log(':(');
     } catch (e) {
         console.error(e);
     }
