@@ -1,3 +1,4 @@
+
 const CheckDatetime = (date) => {
     let dateNow = Date.now();
     const date1 = new Date(date);
@@ -12,3 +13,7 @@ const CheckDatetime = (date) => {
         return "Evento ya comenzado o acabado"
     }
 };
+
+module.exports ={
+    CheckDatetime
+}
