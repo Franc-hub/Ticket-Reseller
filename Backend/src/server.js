@@ -28,7 +28,7 @@ app.disable("x-powered-by");
 
 app.get('/', function (req, res) {
     res.status(200).send('Hello World!');
-  });
+  }
   
 const start = async () => {
     try {
