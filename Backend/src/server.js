@@ -24,10 +24,11 @@ app.use(express.static("."));
 
 app.disable("x-powered-by");
 
-//  test 
 
-app.get('/', function (req, res) {
-    res.status(200).send('Hello World!');
+// test routes and output answer in console
+const checkRoute = () => app.get('/', function (req, res) {
+    if(res.status == 200) return 1;
+    else return 0;
   });
   
 const start = async () => {
@@ -35,7 +36,8 @@ const start = async () => {
         app.listen(config.port, () => {
             console.log(`REST API on http://localhost:${config.port}`);
         });
-
+        if(checkRoute()) console.log(':)');
+        else console.log(':(');
     } catch (e) {
         console.error(e);
     }
