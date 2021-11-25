@@ -1,18 +1,18 @@
 const mongoose = require("mongoose");
 
-const TicketsSchema = mongoose.model({
+const TicketsSchema = {
     event: mongoose.Schema.Types.String,
     reference: mongoose.Schema.Types.String,
     price: mongoose.Schema.Types.String,
-    initialDate: mongoose.Schema.Types.Date,
-    endindDate: mongoose.Schema.Types.Date
-})
+    date: mongoose.Schema.Types.Date
+}
 
 const Tickets = mongoose.model('TicketsModel', TicketsSchema);
 
 //create
-const create = async (Tickets) => {
-    return await Tickets.create(Tickets, function (err, docs) {
+const create = async (tickets) => {
+    const newTicket = new Tickets(tickets)
+    await newTicket.save(tickets, function (err, docs) {
         if (err) {
             console.log(err);
         } else {
@@ -20,6 +20,7 @@ const create = async (Tickets) => {
             return docs;
         }
     });
+    return newTicket;
 };
 
 //get (get one)
@@ -34,18 +35,18 @@ const all = async () => {
 };
 
 //update
-const update = async (id, updatedTickets) => {
-    let query = { _id: id };
-    await Tickets.updateOne(query, updatedTickets, function (err, docs) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log('Updated Docs : ', docs);
-        }
-    });
-    const updatedTickets = Tickets.findById(query)
-    return updatedTickets
-};
+// const update = async (id, updatedTickets) => {
+//     let query = { _id: id };
+//     await Tickets.updateOne(query, updatedTickets, function (err, docs) {
+//         if (err) {
+//             console.log(err);
+//         } else {
+//             console.log('Updated Docs : ', docs);
+//         }
+//     });
+//     const updatedTickets = Tickets.findById(query)
+//     return updatedTickets
+// };
 
 //remove
 const remove = (id) => {
@@ -63,6 +64,5 @@ module.exports = {
     create,
     get,
     all,
-    update,
     remove
 }

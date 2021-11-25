@@ -10,10 +10,10 @@ const CheckDatetime = (date) => {
         const diffS = (diffInMs / (1000)) % 60;
         return `${Math.floor(diffDays)} ${Math.floor(diffHrs)} ${Math.floor(diffMn)} ${Math.floor(diffS)}`
     } else {
-        return "Evento ya comenzado o acabado"
+        return false
     }
 };
 
-module.exports ={
+module.exports = {
     CheckDatetime
 }
