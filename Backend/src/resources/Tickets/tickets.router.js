@@ -14,7 +14,7 @@ router
     .delete(ticketsController.deleteOne);
     
 router
-.route('/user/:id')
+.route('/user/:id/disco/:id')
 .post(ticketsController.create)
 
 module.exports = router;

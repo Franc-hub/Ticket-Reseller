@@ -1,7 +1,7 @@
 const ticketsModel = require('./tickets.model')
 const DateTime = require('../../../aux/Datetime')
 const usersModel = require("../Users/users.model")
-
+const discoModel = require("../Discos/discos.model")
 
 const create = async (req, res) => {
 
@@ -12,6 +12,7 @@ const create = async (req, res) => {
     const ticket = req.body;
     const newTicket = await ticketsModel.create(ticket)
     usersModel.update(req.params.id,{$push:{tickets: newTicket._id}})
+    discoModel.update(req.params.id,{$push:{tickets: newTicket._id}})
     return await res.status(201).json(newTicket)
 
 

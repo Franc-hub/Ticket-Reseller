@@ -71,6 +71,7 @@ const update = async (id, updatedUser) => {
       console.log("Updated Docs : ", docs);
     }
   });
+  
 };
 
 const getAll = async () => {
