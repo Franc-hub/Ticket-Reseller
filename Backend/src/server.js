@@ -3,10 +3,13 @@ const { json, urlencoded } = require("body-parser");
 const morgan = require("morgan");
 const cors = require("cors");
 const jwt = require("express-jwt");
+const dotenv = require("dotenv");
 require("dotenv").config();
 const config = require("./config.js");
 const path = require("path");
 const ticketsRouter = require('./resources/Tickets/tickets.router')
+const usersRouter = require("./resources/Users/users.router");
+const discosRouter = require('./resources/Discos/discos.router');
 
 global.appRoot = path.resolve(__dirname);
 
@@ -24,8 +27,12 @@ app.use(urlencoded({ extended: true }));
 app.use(morgan("dev"));
 app.use(express.static("."));
 app.disable("x-powered-by");
+
 app.use("/Tickets", ticketsRouter)
-const check = app.get('/', function (req, res) {
+app.use("/Users", usersRouter);
+app.use("/Discos", discosRouter);
+
+const check = app.get( '/', function (req, res) {
     return res.status(200).send("If you see this everything should working fine.");
 })
 
