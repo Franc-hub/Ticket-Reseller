@@ -7,8 +7,10 @@ const dotenv = require("dotenv");
 require("dotenv").config();
 const config = require("./config.js");
 const path = require("path");
+const ticketsRouter = require('./resources/Tickets/tickets.router')
 const usersRouter = require("./resources/Users/users.router");
 const discosRouter = require('./resources/Discos/discos.router');
+
 global.appRoot = path.resolve(__dirname);
 
 const app = express();
@@ -24,8 +26,9 @@ app.use(json());
 app.use(urlencoded({ extended: true }));
 app.use(morgan("dev"));
 app.use(express.static("."));
-
 app.disable("x-powered-by");
+
+app.use("/Tickets", ticketsRouter)
 app.use("/Users", usersRouter);
 app.use("/Discos", discosRouter);
 
@@ -33,13 +36,13 @@ const check = app.get( '/', function (req, res) {
     return res.status(200).send("If you see this everything should working fine.");
 })
 
-  
+
 const start = async () => {
     try {
         app.listen(config.port, () => {
             console.log(`REST API on http://localhost:${config.port}`);
         });
-        if(check) console.log(':)');
+        if (check) console.log(':)');
         else console.log(':(');
     } catch (e) {
         console.error(e);
