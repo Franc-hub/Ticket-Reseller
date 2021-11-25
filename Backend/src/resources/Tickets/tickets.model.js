@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const TicketsSchema = {
     event: mongoose.Schema.Types.String,
     reference: mongoose.Schema.Types.String,
-    price: mongoose.Schema.Types.String,
+    price: mongoose.Schema.Types.Number,
     date: mongoose.Schema.Types.Date,
 
 }

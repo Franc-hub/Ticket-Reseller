@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const transactionsController = require("./transactions.controller");
+const { body } = require('express-validator');
 
 const router = Router();
 
@@ -13,5 +14,7 @@ router
 
     router
     .route('/:buyerId/:ticketId')
+    .post(
+        transactionsController.create)
     
 module.exports = router;

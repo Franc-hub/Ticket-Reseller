@@ -1,4 +1,6 @@
 const userModel = require("./users.model");
+const { validationResult } = require('express-validator');
+
 
 const getAll = async (req, res) => {
   const users = await userModel.getAll();
@@ -10,14 +12,12 @@ const get = async (req, res) => {
   return res.status(200).json(user);
 };
 
-const create = async (req, res) => {
-  const newUser = req.body;
-  newUser.tickets = []
-  const userCreated = await userModel.create(newUser);
-  return await res.status(201).json(userCreated);
-};
-
 const update = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   const updatedUser = req.body;
   const userUpdated = await userModel.update(req.params.id, updatedUser);
   return await res.status(200).json(userUpdated);
@@ -28,16 +28,15 @@ const remove = (req, res) => {
   return res.status(200).json(userDeleted);
 };
 
-const getUserByTicket = (req,res) => {
+const getUserByTicket = (req, res) => {
   const ticketOfuser = userModel.getUserByTicket(req.params.id)
-  if(!ticketOfuser){
+  if (!ticketOfuser) {
     return res.status(400).json("This user doesn't have this ticket")
   }
   return res.status(200).json(ticketOfuser)
 }
 
 module.exports = {
-  create,
   update,
   get,
   remove,

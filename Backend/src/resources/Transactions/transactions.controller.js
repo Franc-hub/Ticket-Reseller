@@ -1,4 +1,5 @@
 const transactionsModel = require("./transactions.model");
+const userModel = require("../Users/users.model")
 
 const getAll = async (req, res) => {
   const transactions = await transactionsModel.getAll();
@@ -14,7 +15,7 @@ const create = async (req, res) => {
   const newTransactions = {};
   newTransactions.ticket = req.params.ticketId;
   newTransactions.buyer = req.params.buyerId;
-  newTransactions.seller = req.params.buyerId;
+  newTransactions.seller = userModel.getUserByTicket(req.params.buyerId);
   const transactionsCreated = await transactionsModel.create(newTransactions);
   return await res.status(201).json(transactionsCreated);
 };

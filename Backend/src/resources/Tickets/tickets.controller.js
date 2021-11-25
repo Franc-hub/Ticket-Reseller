@@ -2,9 +2,14 @@ const ticketsModel = require('./tickets.model')
 const DateTime = require('../../../aux/Datetime')
 const usersModel = require("../Users/users.model")
 const discoModel = require("../Discos/discos.model")
+const { validationResult } = require('express-validator');
+
 
 const create = async (req, res) => {
-
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
     const validTime = DateTime.CheckDatetime(req.body.date)
     if (!validTime) {
         return res.status(400).json("This event has already started")
