@@ -10,6 +10,7 @@ const path = require("path");
 const ticketsRouter = require('./resources/Tickets/tickets.router')
 const usersRouter = require("./resources/Users/users.router");
 const discosRouter = require('./resources/Discos/discos.router');
+const transactionsRouter = require("./resources/Transactions/transactions.router")
 
 global.appRoot = path.resolve(__dirname);
 
@@ -31,6 +32,7 @@ app.disable("x-powered-by");
 app.use("/Tickets", ticketsRouter)
 app.use("/Users", usersRouter);
 app.use("/Discos", discosRouter);
+app.use("/Transactions", transactionsRouter);
 
 const check = app.get( '/', function (req, res) {
     return res.status(200).send("If you see this everything should working fine.");

@@ -6,6 +6,10 @@ const userModelSchema = mongoose.Schema({
   email: mongoose.Schema.Types.String,
   password: mongoose.Schema.Types.String,
   phone: mongoose.Schema.Types.String,
+  tickets: {
+    type: mongoose.Schema.Types.ObjectId && Array,
+    ref: 'TicketsModel'
+  }
 });
 
 userModelSchema.pre("save", async function (next) {
@@ -36,6 +40,12 @@ const get = async (id) => {
   return await User.findOne(query);
 };
 
+const getUserByTicket = async (ticket) => {
+  let query = { tickets: ticket }
+  return await User.findOne(query)
+
+}
+
 const remove = (id) => {
   let query = { _id: id };
   User.deleteOne(query, function (err, docs) {
@@ -50,8 +60,10 @@ const remove = (id) => {
 
 const update = async (id, updatedUser) => {
   let query = { _id: id };
-  const salt = await bcrypt.genSalt();
-  updatedUser.password = await bcrypt.hash(updatedUser.password, salt);
+  if (updatedUser.password) {
+    const salt = await bcrypt.genSalt();
+    updatedUser.password = await bcrypt.hash(updatedUser.password, salt);
+  }
   User.updateOne(query, updatedUser, function (err, docs) {
     if (err) {
       console.log(`error al realizar la petición ${err}`);
@@ -59,6 +71,7 @@ const update = async (id, updatedUser) => {
       console.log("Updated Docs : ", docs);
     }
   });
+  
 };
 
 const getAll = async () => {
@@ -71,5 +84,6 @@ module.exports = {
   remove,
   get,
   update,
-  getAll
+  getAll,
+  getUserByTicket
 };

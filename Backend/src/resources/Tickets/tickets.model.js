@@ -1,10 +1,12 @@
 const mongoose = require("mongoose");
 
+
 const TicketsSchema = {
     event: mongoose.Schema.Types.String,
     reference: mongoose.Schema.Types.String,
     price: mongoose.Schema.Types.String,
-    date: mongoose.Schema.Types.Date
+    date: mongoose.Schema.Types.Date,
+
 }
 
 const Tickets = mongoose.model('TicketsModel', TicketsSchema);
@@ -29,24 +31,16 @@ const get = async (id) => {
     return await Tickets.findOne(query);
 };
 
+
 //get (get all)
 const all = async () => {
     return await Tickets.find();
 };
 
-//update
-// const update = async (id, updatedTickets) => {
-//     let query = { _id: id };
-//     await Tickets.updateOne(query, updatedTickets, function (err, docs) {
-//         if (err) {
-//             console.log(err);
-//         } else {
-//             console.log('Updated Docs : ', docs);
-//         }
-//     });
-//     const updatedTickets = Tickets.findById(query)
-//     return updatedTickets
-// };
+// const getTicketByDisco = async (disco) => {
+//     let query = {disco : disco}
+//     return await Tickets.findOne(query)
+// }
 
 //remove
 const remove = (id) => {
@@ -60,9 +54,11 @@ const remove = (id) => {
     });
 };
 
+
+
 module.exports = {
     create,
     get,
     all,
-    remove
+    remove,
 }

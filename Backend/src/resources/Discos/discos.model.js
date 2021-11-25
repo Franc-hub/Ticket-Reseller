@@ -3,6 +3,10 @@ const mongoose = require("mongoose");
 const discoModelSchema = mongoose.Schema({
   name: mongoose.Schema.Types.String,
   location: mongoose.Schema.Types.String,
+  tickets: {
+    type: mongoose.Schema.Types.ObjectId && Array,
+    ref: 'TicketsModel'
+  }
 });
 
 
@@ -43,10 +47,21 @@ const getAll = async () => {
   return await Disco.find();
 };
 
+const update = (id, updateDisco) => {
+  let query = { _id: id };
+  Disco.updateOne(query, updateDisco, function (err, docs) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('Updated Docs : ', docs);
+    }
+  });
+};
 
 module.exports = {
   create,
   remove,
   get,
-  getAll
+  getAll,
+  update
 };

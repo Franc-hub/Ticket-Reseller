@@ -1,6 +1,7 @@
 const ticketsModel = require('./tickets.model')
 const DateTime = require('../../../aux/Datetime')
-
+const usersModel = require("../Users/users.model")
+const discoModel = require("../Discos/discos.model")
 
 const create = async (req, res) => {
 
@@ -10,9 +11,11 @@ const create = async (req, res) => {
     }
     const ticket = req.body;
     const newTicket = await ticketsModel.create(ticket)
+    usersModel.update(req.params.id,{$push:{tickets: newTicket._id}})
+    discoModel.update(req.params.id,{$push:{tickets: newTicket._id}})
     return await res.status(201).json(newTicket)
 
-    
+
 }
 
 const getAll = async (req, res) => {
@@ -27,7 +30,7 @@ const getOne = async (req, res) => {
     }
     return res.status(404).end();
 };
-//
+
 const deleteOne = async (req, res) => {
     const deleteTicket = await ticketsModel.remove(req.params.id);
     if (deleteTicket) {
