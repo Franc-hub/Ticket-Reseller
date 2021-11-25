@@ -18,15 +18,17 @@ userModelSchema.pre("save", async function (next) {
 // Compile model from schema
 const User = mongoose.model("UserModel", userModelSchema);
 
-const create = (user) => {
+const create = async (user) => {
   const newUser = new User(user);
-  newUser.save(user, function (err, docs) {
+  await newUser.save(user, function (err, docs) {
     if (err) {
       return console.log(err);
     } else {
       console.log("Created Docs : ", docs);
+      return docs;
     }
   });
+  return newUser;
 };
 
 const get = async (id) => {

@@ -19,6 +19,7 @@ const create = (disco) => {
       console.log("Created Docs : ", docs);
     }
   });
+  return newDisco;
 };
 
 const get = async (id) => {
