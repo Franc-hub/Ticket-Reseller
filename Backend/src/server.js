@@ -11,6 +11,7 @@ const ticketsRouter = require('./resources/Tickets/tickets.router')
 const usersRouter = require("./resources/Users/users.router");
 const discosRouter = require('./resources/Discos/discos.router');
 const transactionsRouter = require("./resources/Transactions/transactions.router")
+const authRouter = require('./resources/Auth/auth.router')
 
 global.appRoot = path.resolve(__dirname);
 
@@ -20,8 +21,6 @@ const jwtProtection = jwt({
     algorithms: ["HS256"],
 });
 
-
-
 app.use(cors());
 app.use(json());
 app.use(urlencoded({ extended: true }));
@@ -30,11 +29,12 @@ app.use(express.static("."));
 app.disable("x-powered-by");
 
 app.use("/Tickets", ticketsRouter)
-app.use("/Users", usersRouter);
+app.use("/Users", usersRouter, jwtProtection);
 app.use("/Discos", discosRouter);
 app.use("/Transactions", transactionsRouter);
+app.use("/Auth", authRouter, jwtProtection);
 
-const check = app.get( '/', function (req, res) {
+const check = app.get('/', function (req, res) {
     return res.status(200).send("If you see this everything should working fine.");
 })
 

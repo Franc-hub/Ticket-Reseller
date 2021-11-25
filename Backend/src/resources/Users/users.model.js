@@ -78,6 +78,17 @@ const getAll = async () => {
   return await User.find();
 };
 
+const login = async (email, password) => {
+  const user = await User.findOne({ email: email });
+  if (user) {
+    const auth = await bcrypt.compare(password, user.password);
+    if (auth) {
+      return user;
+    }
+    throw Error("incorrect password");
+  }
+  throw Error("incorrect email");
+};
 
 module.exports = {
   create,
@@ -85,5 +96,6 @@ module.exports = {
   get,
   update,
   getAll,
-  getUserByTicket
+  getUserByTicket,
+  login
 };
