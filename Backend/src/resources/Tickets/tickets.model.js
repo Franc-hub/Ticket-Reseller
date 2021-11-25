@@ -31,6 +31,7 @@ const get = async (id) => {
     return await Tickets.findOne(query);
 };
 
+
 //get (get all)
 const all = async () => {
     return await Tickets.find();
@@ -59,5 +60,5 @@ module.exports = {
     create,
     get,
     all,
-    remove
+    remove,
 }

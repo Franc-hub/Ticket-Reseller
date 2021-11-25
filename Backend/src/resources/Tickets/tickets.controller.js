@@ -31,7 +31,6 @@ const getOne = async (req, res) => {
     return res.status(404).end();
 };
 
-
 const deleteOne = async (req, res) => {
     const deleteTicket = await ticketsModel.remove(req.params.id);
     if (deleteTicket) {
