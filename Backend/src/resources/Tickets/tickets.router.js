@@ -5,12 +5,16 @@ const router = Router();
 router
     .route('/')
     .get(ticketsController.getAll)
-    .post(ticketsController.create);
+    
 
 router
     .route('/:id')
     .get(ticketsController.getOne)
     // .put(ticketsController.update)
     .delete(ticketsController.deleteOne);
+    
+router
+.route('/user/:id')
+.post(ticketsController.create)
 
 module.exports = router;

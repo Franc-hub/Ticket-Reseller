@@ -3,6 +3,10 @@ const mongoose = require("mongoose");
 const discoModelSchema = mongoose.Schema({
   name: mongoose.Schema.Types.String,
   location: mongoose.Schema.Types.String,
+  tickets: {
+    type: mongoose.Schema.Types.ObjectId && Array,
+    ref: 'TicketsModel'
+  }
 });
 
 

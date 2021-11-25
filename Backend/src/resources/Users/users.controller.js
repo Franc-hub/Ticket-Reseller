@@ -12,6 +12,7 @@ const get = async (req, res) => {
 
 const create = async (req, res) => {
   const newUser = req.body;
+  newUser.tickets = []
   const userCreated = await userModel.create(newUser);
   return await res.status(201).json(userCreated);
 };
@@ -27,10 +28,19 @@ const remove = (req, res) => {
   return res.status(200).json(userDeleted);
 };
 
+const getUserByTicket = (req,res) => {
+  const ticketOfuser = userModel.getUserByTicket(req.params.id)
+  if(!ticketOfuser){
+    return res.status(400).json("This user doesn't have this ticket")
+  }
+  return res.status(200).json(ticketOfuser)
+}
+
 module.exports = {
   create,
   update,
   get,
   remove,
   getAll,
+  getUserByTicket
 };
