@@ -26,7 +26,8 @@ const login = async (req, res) => {
     //    return res.status(400).json({ errors: errors.array() });
     //   }
     const newUser = req.body;
-    const userCreated = await userModel.create(newUser);
+    newUser.tickets = []
+    const userCreated = await usersModel.create(newUser);
     return await res.status(201).json(userCreated);
   };
   module.exports = {
